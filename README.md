@@ -40,6 +40,17 @@ once you serve the application, you can now go to URL you've setup, it will redi
 **For the commmandline functionality:**
 please run: `php artisan Users:AddComment --help` this will give you instructions for the required arguments
 
+## Essentials
+* the password for all users is `password`
+* route list:
+  * web.php
+    * PUT - /users
+    * GET|HEAD /users-ajax
+    * GET|HEAD - /users/{id}
+  * api.php
+    * PUT - api/user
+    * GET|HEAD - api/user/{id}
+
 ### Exam done by Radiant C. Juan <br>
 for more info about me please check: <br>
 [Portfolio website](https://radiantcjuan.me/) <br>
