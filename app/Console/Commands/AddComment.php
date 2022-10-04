@@ -38,7 +38,7 @@ class AddComment extends Command {
      * @return int
      */
     public function handle() {
-        $rules = ['id' => 'numeric', 'comment' => 'min:15'];
+        $rules = ['id' => 'numeric', 'comment' => 'min:8'];
         $input = [
             'id' => $this->argument('ID'),
             'comment' => $this->argument('COMMENT')

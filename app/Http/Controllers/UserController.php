@@ -34,7 +34,7 @@ class UserController extends Controller {
         $data = $request->validate([
             'id' => ['required', 'numeric'],
             'password' => ['required', 'min:5'],
-            'comment' => ['required', 'min:15']
+            'comment' => ['required', 'min:8']
         ]);
 
         $user = User::find($request->id);
@@ -86,7 +86,7 @@ class UserController extends Controller {
         $data = $request->validate([
             'id' => ['required', 'numeric'],
             'password' => ['required', 'min:5'],
-            'comment' => ['required', 'min:15']
+            'comment' => ['required', 'min:8']
         ]);
 
         $user = User::find($request->id);
