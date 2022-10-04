@@ -2083,13 +2083,15 @@ $(function () {
     var populateData = function populateData(_ref) {
       var img = _ref.img,
           name = _ref.name,
-          comments = _ref.comments;
+          comments = _ref.comments,
+          id = _ref.id;
       $('.js-image').attr('src', img);
       $('.js-name').text(name);
       var comments_map = comments.map(function (val) {
         return '<p>' + val + '</p>';
       });
       $('.js-comment-lists').html(comments_map);
+      $(".js-users-lists option[value=\"".concat(id, "\"]")).prop('selected', true);
     };
     /**
      * Comment for by ID
@@ -2174,6 +2176,16 @@ $(function () {
     }();
 
     $(document).on('submit', '#commentForm', commentFormSubmitHandler);
+    $(document).on('change', '.js-users-lists', function (e) {
+      $('.js-loading').removeClass('hidden');
+      $('.js-content').addClass('hidden');
+      axios.get("/api/user/".concat($(e.target).val())).then(function (response) {
+        populateData(response.data.data);
+      }).then(function () {
+        $('.js-loading').addClass('hidden');
+        $('.js-content').removeClass('hidden');
+      });
+    });
   }
 
   if (location.href.search('users/') > 0) {

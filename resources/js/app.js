@@ -7,16 +7,16 @@ $(() => {
             $('.js-loading').addClass('hidden');
             $('.js-content').removeClass('hidden');
             populateData(response.data.data);
-
         });
 
-        const populateData = ({img, name, comments}) => {
+        const populateData = ({img, name, comments, id}) => {
             $('.js-image').attr('src', img);
             $('.js-name').text(name);
             const comments_map = comments.map((val) => {
                 return '<p>' + val + '</p>';
             });
             $('.js-comment-lists').html(comments_map);
+            $(`.js-users-lists option[value="${id}"]`).prop('selected', true);
         }
 
         /**
@@ -71,6 +71,16 @@ $(() => {
         }
 
         $(document).on('submit', '#commentForm', commentFormSubmitHandler);
+        $(document).on('change', '.js-users-lists', (e) => {
+            $('.js-loading').removeClass('hidden');
+            $('.js-content').addClass('hidden');
+            axios.get(`/api/user/${$(e.target).val()}`).then((response) => {
+                populateData(response.data.data);
+            }).then(() => {
+                $('.js-loading').addClass('hidden');
+                $('.js-content').removeClass('hidden');
+            });
+        });
     }
 
     if(location.href.search('users/') > 0) {
