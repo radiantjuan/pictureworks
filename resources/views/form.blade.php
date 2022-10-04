@@ -1,5 +1,5 @@
 <hr />
-<form method="post" action="{{route('users.add.comment')}}" id="commentForm">
+<form method="post" action="" id="commentForm">
     {{method_field('PUT')}}
     {{csrf_field()}}
     <div>

@@ -18,3 +18,4 @@ Route::get('/', function (){
 });
 
 Route::get('/users/{id}', [\App\Http\Controllers\UserController::class, 'index'])->name('users');
+Route::get('/users-ajax', [\App\Http\Controllers\UserController::class, 'index_ajax'])->name('users.ajax');
