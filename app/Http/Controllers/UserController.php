@@ -20,6 +20,26 @@ class UserController extends Controller {
             abort(404);
         }
         $user_comments = json_decode($user->comments, true);
-        return view('welcome', compact(['user', 'user_comments']));
+        return view('users', compact(['user', 'user_comments']));
+    }
+
+    /**
+     * index page for the ajax behavior page
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function index_ajax(Request $request) {
+        return view('users-ajax');
+    }
+
+    /**
+     * Fetch the user info from the DB
+     *
+     * @return \App\Http\Resources\UserResource
+     */
+    public function get_user_info($id) {
+        $user = User::find(!empty($id) ? $id : 1);
+        return new UserResource($user);
     }
 }
