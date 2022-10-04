@@ -18,4 +18,5 @@ Route::get('/', function (){
 });
 
 Route::get('/users/{id}', [\App\Http\Controllers\UserController::class, 'index'])->name('users');
+Route::put('/users', [\App\Http\Controllers\UserController::class, 'add_comment'])->name('users.add.comment');
 Route::get('/users-ajax', [\App\Http\Controllers\UserController::class, 'index_ajax'])->name('users.ajax');
