@@ -1,4 +1,5 @@
 <hr />
+<h2>Add comment to a user</h2>
 <form method="post" action="{{route('users.add.comment')}}" id="commentForm">
     {{method_field('PUT')}}
     {{csrf_field()}}
@@ -8,7 +9,13 @@
             {{$message}}
             @enderror
         </span>
-        <input type="text" id="id" name="id" class="@error('id')invalid @enderror" placeholder="Enter ID here"/>
+
+        <select id="id" name="id" class="@error('id')invalid @enderror js-users-lists">
+            <option value="0">Choose a user</option>
+            @foreach($users_list as $user_list_item)
+                <option value="{{$user_list_item->id}}" @if((int)request('id') === $user_list_item->id) selected @endif>{{$user_list_item->name}}</option>
+            @endforeach
+        </select>
         <label for="id">ID</label>
     </div>
     <div>

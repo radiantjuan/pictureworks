@@ -20,7 +20,8 @@ class UserController extends Controller {
             abort(404);
         }
         $user_comments = json_decode($user->comments, true);
-        return view('users', compact(['user', 'user_comments']));
+        $users_list = User::select(['id', 'name'])->orderBy('id')->get();
+        return view('users', compact(['user', 'user_comments', 'users_list']));
     }
 
 
@@ -32,7 +33,7 @@ class UserController extends Controller {
      */
     public function add_comment(Request $request) {
         $data = $request->validate([
-            'id' => ['required', 'numeric'],
+            'id' => ['required', 'min:1'],
             'password' => ['required', 'min:5'],
             'comment' => ['required', 'min:8']
         ]);
@@ -43,10 +44,7 @@ class UserController extends Controller {
         if (!empty($user)) {
             if ($hasher->check($request->password, $user->password)) {
                 // Success
-                $comments = json_decode($user->comments);
-                array_push($comments, $data['comment']);
-                $user->comments = json_encode($comments);
-                $user->update();
+                $user = User::add_comment($user, $data);
                 return redirect('/users/' . $user->id);
             } else {
                 return redirect('/users/' . $user->id)->withErrors(['password' => 'the password you entered is incorrect']);
@@ -63,7 +61,8 @@ class UserController extends Controller {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index_ajax(Request $request) {
-        return view('users-ajax');
+        $users_list = User::select(['id', 'name'])->orderBy('id')->get();
+        return view('users-ajax', compact(['users_list']));
     }
 
     /**
@@ -95,10 +94,7 @@ class UserController extends Controller {
         if (!empty($user)) {
             if ($hasher->check($request->password, $user->password)) {
                 // Success
-                $comments = json_decode($user->comments);
-                array_push($comments, $data['comment']);
-                $user->comments = json_encode($comments);
-                $user->update();
+                $user = User::add_comment($user, $data);
                 return new UserResource($user);
             } else {
                 return response([

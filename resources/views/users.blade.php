@@ -7,7 +7,7 @@
                      alt=""/>
             </span>
             <h1>{{$user->name}}</h1>
-            <h3>Comments:</h3>
+            <h2>Comments:</h2>
             @foreach($user_comments as $comments)
                 <p>{{nl2br($comments)}}</p>
             @endforeach

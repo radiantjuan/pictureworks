@@ -11,7 +11,7 @@
                      alt=""/>
                 </span>
                 <h1 class="js-name"></h1>
-                <h3>Comments:</h3>
+                <h2>Comments:</h2>
                 <div class="js-comment-lists">
                 </div>
             </div>

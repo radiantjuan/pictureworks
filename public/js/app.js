@@ -2175,6 +2175,12 @@ $(function () {
 
     $(document).on('submit', '#commentForm', commentFormSubmitHandler);
   }
+
+  if (location.href.search('users/') > 0) {
+    $(document).on('change', '.js-users-lists', function (e) {
+      location.href = '/users/' + $(e.target).val();
+    });
+  }
 });
 
 /***/ }),

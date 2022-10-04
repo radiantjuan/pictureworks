@@ -8,8 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -19,26 +18,26 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
         'password',
+        'comments'
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Add comment to a user
      *
-     * @var array<int, string>
+     * @param $user \App\Models\User model instance
+     * @param $data array            data from form passed
+     *
+     * @return \App\Models\User
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public static function add_comment($user, $data) {
+        if (!empty($user)) {
+            $comments = json_decode($user->comments);
+            array_push($comments, $data['comment']);
+            $user->comments = json_encode($comments);
+            $user->update();
+        }
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+        return $user;
+    }
 }

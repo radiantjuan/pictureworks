@@ -46,16 +46,13 @@ class AddComment extends Command {
         $errors = Validator::make($input, $rules)->errors();
 
         if (!empty($errors->messages())) {
-            foreach($errors->messages() as $error_message) {
+            foreach ($errors->messages() as $error_message) {
                 $this->error($error_message[0]);
             }
         } else {
             $user = User::find($input['id']);
             if (!empty($user)) {
-                $comments = json_decode($user->comments, true);
-                array_push($comments, $input['comment']);
-                $user->comments = json_encode($comments);
-                $user->update();
+                $user = User::add_comment($user, $input);
                 $this->line("Update success!");
                 $this->line("You can check the update in " . env('APP_URL') . "/users/" . $user->id);
             } else {
