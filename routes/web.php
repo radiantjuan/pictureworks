@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (){
+    return redirect('/users/1');
 });
+
+Route::get('/users/{id}', [\App\Http\Controllers\UserController::class, 'index'])->name('users');
+Route::get('/users-ajax', [\App\Http\Controllers\UserController::class, 'index_ajax'])->name('users.ajax');
